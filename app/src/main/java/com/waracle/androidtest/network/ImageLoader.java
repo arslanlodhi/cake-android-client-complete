@@ -1,21 +1,14 @@
 package com.waracle.androidtest.network;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.waracle.androidtest.enums.NetworkCallType;
-import com.waracle.androidtest.models.CakeModel;
-import com.waracle.androidtest.utils.AppUtils;
 import com.waracle.androidtest.utils.ImageUtils;
-
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 
-import javax.inject.Inject;
 
 /**
  * Created by Riad on 20/05/2015.
@@ -27,7 +20,7 @@ public class ImageLoader {
 
     NetworkManager networkManager;
 
-    public ImageLoader( NetworkManager networkManager) { /**/
+    public ImageLoader( NetworkManager networkManager) {
 
         this.networkManager=networkManager;
 
@@ -37,8 +30,6 @@ public class ImageLoader {
         mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
-                // The cache size will be measured in kilobytes rather than
-                // number of items.
                 return bitmap.getByteCount() / 1024;
             }
         };
@@ -72,6 +63,7 @@ public class ImageLoader {
         if (TextUtils.isEmpty(url)) {
             throw new InvalidParameterException("URL is empty!");
         }
+        imageView.setTag(url);
         // Can you think of a way to improve loading of bitmaps
         // that have already been loaded previously??
         //?? i have implemented LRU Cache to serve them from memory if Already Loaded
@@ -85,7 +77,8 @@ public class ImageLoader {
                 public void onResponseReceived(String url, byte[] data, String charset) {
                     Bitmap bitmap= ImageUtils.convertToBitmap(data);
                     addBitmapToMemoryCache(url, bitmap);
-                    ImageUtils.setImageView(imageView, bitmap);
+                    if(imageView.getTag().equals(url))
+                        ImageUtils.setImageView(imageView, bitmap);
                 }
 
                 @Override
