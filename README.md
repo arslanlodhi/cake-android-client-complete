@@ -2,12 +2,9 @@
 
 Here is the second solution with complete revamp, I have used Android Architecture components, MVVM and Dagger 2 to make it clean and extendable.
 
-<<<<<<< HEAD
-**
+***
 NOTE: It contains all the fixes of solution # 1
-**
-=======
->>>>>>> 178f9a8e092453ee708732bff12c9e08ec70eaf5
+***
 
 # Libraries I might have used
 As per the requirement Its a sensitive Project and i was instructed not to use third party libraries, But if i have got the chance to use 3rd party libraries. I might have used libraries mentioned below.
